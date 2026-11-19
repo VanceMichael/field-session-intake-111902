@@ -75,7 +75,7 @@ export function createSource() {
     const portal = Boolean(fixture.pages);
     function send(status, value, kind = 'json') {
       const types = { json: 'application/json', ndjson: 'application/x-ndjson', html: 'text/html' };
-      const body = kind === 'ndjson' ? value.map(row => JSON.stringify(row)).join('\n') + '\n'
+      const body = kind === 'ndjson' ? value.map(row => JSON.stringify(row) + '\n').join('')
         : kind === 'json' ? JSON.stringify(value) : value;
       response.writeHead(status, { 'content-type': types[kind] + '; charset=utf-8', 'cache-control': 'no-store' });
       response.end(body);

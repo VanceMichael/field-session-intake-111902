@@ -31,7 +31,7 @@ test('已登记的原始资料可以按来源契约读取', async () => {
       const response = await request(route.path + (query.size ? '?' + query : ''));
       assert.equal(response.status, route.status, route.path);
       const received = route.kind === 'ndjson'
-        ? (await response.text()).trimEnd().split('\n').map(line => JSON.parse(line))
+        ? (await response.text()).split('\n').filter(Boolean).map(line => JSON.parse(line))
         : await response.json();
       assert.deepEqual(received, route.steps[phase], route.path);
     }

@@ -3,8 +3,82 @@
   "routes": [
     {
       "method": "GET",
+      "path": "/device/manifest",
+      "note": "每包的 interval 是此开机段的闭区间记录序号。pending 表示仪器尚未交包，available 仍需获取原文。",
+      "steps": [
+        [
+          {
+            "device": "I4",
+            "boot": "B12",
+            "packet": "E-18",
+            "interval": [
+              7,
+              8
+            ],
+            "state": "available"
+          },
+          {
+            "device": "I4",
+            "boot": "B12",
+            "packet": "E-19",
+            "interval": [
+              9,
+              9
+            ],
+            "state": "pending"
+          },
+          {
+            "device": "I4",
+            "boot": "B13",
+            "packet": "E-21",
+            "interval": [
+              7,
+              7
+            ],
+            "state": "available"
+          }
+        ],
+        [
+          {
+            "device": "I4",
+            "boot": "B12",
+            "packet": "E-18",
+            "interval": [
+              7,
+              8
+            ],
+            "state": "available"
+          },
+          {
+            "device": "I4",
+            "boot": "B12",
+            "packet": "E-19",
+            "interval": [
+              8,
+              9
+            ],
+            "state": "available",
+            "location": "领队回库"
+          },
+          {
+            "device": "I4",
+            "boot": "B13",
+            "packet": "E-21",
+            "interval": [
+              7,
+              7
+            ],
+            "state": "available"
+          }
+        ]
+      ],
+      "status": 200,
+      "kind": "json"
+    },
+    {
+      "method": "GET",
       "path": "/device/exports",
-      "note": "每行一条 JSON。tickMs 为开机后的毫秒。boot、sampleNo、channel 共同限定设备内的读数身份。",
+      "note": "每行一条 JSON。tickMs 为开机后的毫秒。device、boot、sampleNo、channel 共同限定读数身份。",
       "steps": [
         [
           {
@@ -24,24 +98,6 @@
             "channel": "cond",
             "value": 405,
             "stamp": "S19"
-          },
-          {
-            "device": "I4",
-            "boot": "B12",
-            "sampleNo": 8,
-            "tickMs": 18000,
-            "channel": "cond",
-            "value": 405,
-            "stamp": "S19"
-          },
-          {
-            "device": "I4",
-            "boot": "B13",
-            "sampleNo": 7,
-            "tickMs": 5000,
-            "channel": "cond",
-            "value": 402,
-            "stamp": "S20"
           }
         ],
         [
@@ -62,7 +118,22 @@
             "channel": "cond",
             "value": 405,
             "stamp": "S19"
-          },
+          }
+        ]
+      ],
+      "status": 200,
+      "kind": "ndjson",
+      "query": {
+        "packet": "E-18"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device/exports",
+      "note": "领队离线包和仪器原包的记录号可能重叠。",
+      "steps": [
+        [],
+        [
           {
             "device": "I4",
             "boot": "B12",
@@ -72,6 +143,40 @@
             "value": 405,
             "stamp": "S19"
           },
+          {
+            "device": "I4",
+            "boot": "B12",
+            "sampleNo": 9,
+            "tickMs": 26000,
+            "channel": "temp",
+            "value": 14.4,
+            "stamp": "S19"
+          }
+        ]
+      ],
+      "status": 200,
+      "kind": "ndjson",
+      "query": {
+        "packet": "E-19"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device/exports",
+      "note": "另一次开机后获取的仪器包。",
+      "steps": [
+        [
+          {
+            "device": "I4",
+            "boot": "B13",
+            "sampleNo": 7,
+            "tickMs": 5000,
+            "channel": "cond",
+            "value": 402,
+            "stamp": "S20"
+          }
+        ],
+        [
           {
             "device": "I4",
             "boot": "B13",
@@ -84,7 +189,56 @@
         ]
       ],
       "status": 200,
-      "kind": "ndjson"
+      "kind": "ndjson",
+      "query": {
+        "packet": "E-21"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/device/receipts",
+      "note": "包领取受理包含 requestKey、packet、boot、records，records 是原包中已收的记录号。",
+      "steps": [
+        {
+          "fields": [
+            "requestKey",
+            "packet",
+            "boot",
+            "records"
+          ],
+          "pendingUntil": 0,
+          "response": "receipt"
+        },
+        {
+          "fields": [
+            "requestKey",
+            "packet",
+            "boot",
+            "records"
+          ],
+          "pendingUntil": 0,
+          "response": "receipt"
+        }
+      ],
+      "status": 200,
+      "kind": "json"
+    },
+    {
+      "method": "GET",
+      "path": "/device/receipts",
+      "note": "按原经办号核对包领取。",
+      "steps": [
+        {
+          "lookup": "receipt",
+          "key": "requestKey"
+        },
+        {
+          "lookup": "receipt",
+          "key": "requestKey"
+        }
+      ],
+      "status": 200,
+      "kind": "json"
     },
     {
       "method": "GET",

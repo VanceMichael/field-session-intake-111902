@@ -13,7 +13,12 @@
 
 ## 来源接口
 
-- `GET /device/exports` 每行一条 JSON。tickMs 为开机后的毫秒。boot、sampleNo、channel 共同限定设备内的读数身份。
+- `GET /device/manifest` 每包的 interval 是此开机段的闭区间记录序号。pending 表示仪器尚未交包，available 仍需获取原文。
+- `GET /device/exports?packet=E-18` 每行一条 JSON。tickMs 为开机后的毫秒。device、boot、sampleNo、channel 共同限定读数身份。
+- `GET /device/exports?packet=E-19` 领队离线包和仪器原包的记录号可能重叠。
+- `GET /device/exports?packet=E-21` 另一次开机后获取的仪器包。
+- `POST /device/receipts` 包领取受理包含 requestKey、packet、boot、records，records 是原包中已收的记录号。
+- `GET /device/receipts` 按原经办号核对包领取。
 - `GET /device/calibration` UTC 锚点含可能的最大绝对偏移秒数。channelWindow 为厂端允许的开机毫秒区间。
 - `GET /locker/transfers` 交接时刻使用 UTC。更正单以 replaces 指向原登记号。
 - `GET /station/logbook` stamp 是现场登记，迁移记录只在注明时段及原点位范围生效。replacementPurpose 是场地方补做的许可用途。
