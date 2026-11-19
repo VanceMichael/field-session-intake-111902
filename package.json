@@ -8,6 +8,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "start": "node start.mjs"
+    "start": "node start.mjs",
+    "intake": "node intake.mjs"
   }
 }
