@@ -1,0 +1,294 @@
+{
+  "label": "研学现场资料与学校领件口",
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/device/exports",
+      "note": "每行一条 JSON。tickMs 为开机后的毫秒。boot、sampleNo、channel 共同限定设备内的读数身份。",
+      "steps": [
+        [
+          {
+            "device": "I4",
+            "boot": "B12",
+            "sampleNo": 7,
+            "tickMs": 9000,
+            "channel": "temp",
+            "value": 14.2,
+            "stamp": "S18"
+          },
+          {
+            "device": "I4",
+            "boot": "B12",
+            "sampleNo": 8,
+            "tickMs": 18000,
+            "channel": "cond",
+            "value": 405,
+            "stamp": "S19"
+          },
+          {
+            "device": "I4",
+            "boot": "B12",
+            "sampleNo": 8,
+            "tickMs": 18000,
+            "channel": "cond",
+            "value": 405,
+            "stamp": "S19"
+          },
+          {
+            "device": "I4",
+            "boot": "B13",
+            "sampleNo": 7,
+            "tickMs": 5000,
+            "channel": "cond",
+            "value": 402,
+            "stamp": "S20"
+          }
+        ],
+        [
+          {
+            "device": "I4",
+            "boot": "B12",
+            "sampleNo": 7,
+            "tickMs": 9000,
+            "channel": "temp",
+            "value": 14.2,
+            "stamp": "S18"
+          },
+          {
+            "device": "I4",
+            "boot": "B12",
+            "sampleNo": 8,
+            "tickMs": 18000,
+            "channel": "cond",
+            "value": 405,
+            "stamp": "S19"
+          },
+          {
+            "device": "I4",
+            "boot": "B12",
+            "sampleNo": 8,
+            "tickMs": 18000,
+            "channel": "cond",
+            "value": 405,
+            "stamp": "S19"
+          },
+          {
+            "device": "I4",
+            "boot": "B13",
+            "sampleNo": 7,
+            "tickMs": 5000,
+            "channel": "cond",
+            "value": 402,
+            "stamp": "S20"
+          }
+        ]
+      ],
+      "status": 200,
+      "kind": "ndjson"
+    },
+    {
+      "method": "GET",
+      "path": "/device/calibration",
+      "note": "UTC 锚点含可能的最大绝对偏移秒数。channelWindow 为厂端允许的开机毫秒区间。",
+      "steps": [
+        [
+          {
+            "device": "I4",
+            "boot": "B12",
+            "openedAt": "2026-11-19T01:11:00Z",
+            "uncertaintySeconds": 3,
+            "channelWindow": {
+              "temp": [
+                0,
+                30000
+              ],
+              "cond": [
+                10000,
+                30000
+              ]
+            }
+          },
+          {
+            "device": "I4",
+            "boot": "B13",
+            "openedAt": "2026-11-19T01:15:00Z",
+            "uncertaintySeconds": 4,
+            "channelWindow": {
+              "temp": [
+                0,
+                30000
+              ]
+            }
+          }
+        ],
+        [
+          {
+            "device": "I4",
+            "boot": "B12",
+            "openedAt": "2026-11-19T01:11:00Z",
+            "uncertaintySeconds": 3,
+            "channelWindow": {
+              "temp": [
+                0,
+                30000
+              ],
+              "cond": [
+                10000,
+                30000
+              ]
+            }
+          },
+          {
+            "device": "I4",
+            "boot": "B13",
+            "openedAt": "2026-11-19T01:15:00Z",
+            "uncertaintySeconds": 4,
+            "channelWindow": {
+              "temp": [
+                0,
+                30000
+              ]
+            }
+          }
+        ]
+      ],
+      "status": 200,
+      "kind": "json"
+    },
+    {
+      "method": "GET",
+      "path": "/locker/transfers",
+      "note": "交接时刻使用 UTC。更正单以 replaces 指向原登记号。",
+      "steps": [
+        [
+          {
+            "id": "H1",
+            "device": "I4",
+            "at": "2026-11-19T01:02:00Z",
+            "source": "柜台",
+            "target": "A"
+          },
+          {
+            "id": "H2",
+            "device": "I4",
+            "at": "2026-11-19T01:11:22Z",
+            "source": "A",
+            "target": "B"
+          }
+        ],
+        [
+          {
+            "id": "H1",
+            "device": "I4",
+            "at": "2026-11-19T01:02:00Z",
+            "source": "柜台",
+            "target": "A"
+          },
+          {
+            "id": "H3",
+            "replaces": "H2",
+            "device": "I4",
+            "at": "2026-11-19T01:11:13Z",
+            "source": "A",
+            "target": "B"
+          }
+        ]
+      ],
+      "status": 200,
+      "kind": "json"
+    },
+    {
+      "method": "GET",
+      "path": "/station/logbook",
+      "note": "stamp 是现场登记，迁移记录只在注明时段及原点位范围生效。replacementPurpose 是场地方补做的许可用途。",
+      "steps": [
+        [
+          {
+            "stamp": "S18",
+            "station": "湿地西",
+            "at": "2026-11-19T01:11:09Z"
+          },
+          {
+            "stamp": "S19",
+            "station": "湿地北",
+            "at": "2026-11-19T01:11:18Z"
+          },
+          {
+            "stamp": "S20",
+            "station": "湿地北"
+          }
+        ],
+        [
+          {
+            "stamp": "S18",
+            "station": "湿地西",
+            "at": "2026-11-19T01:11:09Z"
+          },
+          {
+            "stamp": "S19",
+            "station": "湿地北",
+            "at": "2026-11-19T01:11:18Z",
+            "witnesses": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "stamp": "S20",
+            "station": "湿地北",
+            "replacementPurpose": "课堂对照",
+            "date": "2026-11-20"
+          }
+        ]
+      ],
+      "status": 200,
+      "kind": "json"
+    },
+    {
+      "method": "POST",
+      "path": "/school/pickups",
+      "note": "学校领件口收 requestKey、group、observations、purpose，撤回另带 priorReceipt。",
+      "steps": [
+        {
+          "fields": [
+            "requestKey",
+            "group",
+            "observations",
+            "purpose"
+          ],
+          "pendingUntil": 0,
+          "response": "receipt"
+        },
+        {
+          "fields": [
+            "requestKey",
+            "group",
+            "observations",
+            "purpose"
+          ],
+          "pendingUntil": 0,
+          "response": "receipt"
+        }
+      ],
+      "status": 200,
+      "kind": "json"
+    },
+    {
+      "method": "GET",
+      "path": "/school/pickups",
+      "note": "原领取号查询。",
+      "steps": [
+        {
+          "lookup": "receipt",
+          "key": "requestKey"
+        },
+        {
+          "lookup": "receipt",
+          "key": "requestKey"
+        }
+      ],
+      "status": 200,
+      "kind": "json"
+    }
+  ]
+}
